@@ -31,9 +31,11 @@ const people = [
  * @returns {string[]} filtered array
  */
 function filterByLength(people, length) {
-  const list = people.filter(names => names.length > length);
-  // return names;
-  return list;
+  // const list = people.filter(names => names.length > length);
+  // // return names;
+  // return list;
+  // one line of code to return
+  return people.filter(names => names.length > length);
 }
 
 /**
@@ -53,8 +55,8 @@ function everyNPerson(people, n) {
   if (n === 0) {
     return people;
   }
-  const list = people.filter(person => people.indexOf(person) % n === 0);
-  return list;
+  return people.filter(person => people.indexOf(person) % n === 0);
+  // return list;
 }
 
 /**
@@ -67,6 +69,24 @@ function everyNPerson(people, n) {
  *    // → ['KW', 'BO']
  */
 
+/*
+  more improved way:
+  function initials(people) {
+  // eslint-disable-next-line prettier/prettier
+  const people2 = people.map(person =>{
+    const nameArr = person.split(' '); // ['Kanye', 'West']
+    const [firstName,lastName] = nameArr;
+    //old syntax next two lines
+    //const firstName = nameArr[0];
+    //const lastName = nameArr[1];
+    return '${firstName[0]} $ {lastName[0]}';
+  }
+  return people2;
+
+  you can also create a function
+}
+  }
+*/
 function initials(people) {
   const list = people.map(person => {
     const name = person.split(' ');
@@ -89,6 +109,12 @@ function initials(people) {
  *    peopleWithPosition(['Kanye', 'Barack'])
  *    // → ['1. Kanye', '2. Barack']
  */
+
+/*
+Improved way for peopleWithPosition
+return people.map((person, index) => `${index}: ${person}`);
+
+*/
 function peopleWithPosition(people) {
   const list = people.map(person => {
     const peopleWithPos = people.indexOf(person);
@@ -103,15 +129,46 @@ console.log(peopleWithPosition);
  * @param {string[]} people
  * @returns {string[]} sorted array
  */
+
+/*
+  Improved way
+  sortByFirstName
+  //this is non-destructive because 
+  it doesnt mess with the outside
+  array.
+  return people.concat().sort()
+  return[...people].sort();//shallow clone.
+ */
 function sortByFirstName(people) {
-  const unorderedList = people;
-  return unorderedList.sort();
+  const list = people;
+  return list.sort();
 }
 console.log(sortByFirstName);
 /**
  * Sorts `people` by last name
  * @param {string[]} people
  * @returns {string[]} sorted array
+ */
+
+/*
+  notes
+  function sortByLastName(people) {
+  const sortedArray = [...people];
+  return sortedArray.sort((a, b) => {
+    const alastName = a.split(' ')[1];
+    const blastName = b.split(' ')[1];
+    if (alastName > blastName) {
+      return 1;
+    }
+    return -1;
+  });
+  return 0; //stable sort
+
+  //shorter line
+  
+  return [...people].sort((left, right) => left.split(' ')[1] > right.split(' ')[1] ? 1 : -1);
+}
+
  */
 function sortByLastName(people) {
   const seperatedNameList = people.map(person => person.split(' '));
@@ -126,6 +183,13 @@ sortByLastName(people);
  * @param {Array} people Array of names
  * @return Number of characters
  */
+
+/*
+Notes:
+function countTotalCharacters(people) {
+  return people.reduce((total, current) => total + current.length, 0);
+}
+*/
 function countTotalCharacters(people) {
   let count = 0;
   people.forEach(person => {
@@ -140,6 +204,14 @@ function countTotalCharacters(people) {
  * @param {string[]} people
  * @param {string} letter
  * @returns {boolean}
+ */
+
+/*
+  Notes:
+  *array .every function*
+  function everyoneHasLetter(people, letter) {
+  return people.every(person => person.includes(letter));
+}
  */
 function everyoneHasLetter(people, letter) {
   const hasIt = true;
@@ -157,7 +229,10 @@ function everyoneHasLetter(people, letter) {
  * @param {string} letter
  * @returns {boolean}
  */
-function someoneHasLetter(people, letter) {}
+function someoneHasLetter(people, letter) {
+  // using .some function
+  return people.some(person => person.includes(letter));
+}
 
 module.exports = {
   filterByLength,
